@@ -10,7 +10,7 @@ namespace ClothBazar.Services
 {
     public class CategoriesService
     {
-        public List<Category> GetCategories()
+        public List<Category> GetCategories() // get all category list
         {
             using (var context = new CBContext())
             {
@@ -18,7 +18,7 @@ namespace ClothBazar.Services
             }
         }
 
-        public Category GetCategoryById(int ID)
+        public Category GetCategoryById(int ID) // get category by id
         {
             using (var context = new CBContext())
             {
@@ -26,7 +26,7 @@ namespace ClothBazar.Services
             }
         }
 
-        public void SaveCategory(Category category)
+        public void SaveCategory(Category category) // save category
         {
             using(var context = new CBContext())
             {
@@ -35,7 +35,7 @@ namespace ClothBazar.Services
             }
         }
 
-        public void UpdateCategory(Category category)
+        public void UpdateCategory(Category category) // update category
         {
             using (var context = new CBContext())
             {
@@ -44,7 +44,7 @@ namespace ClothBazar.Services
             }
         }
 
-        public void DeleteCategory(int ID)
+        public void DeleteCategory(int ID) // delete category
         {
             using (var context = new CBContext())
             {
