@@ -8,13 +8,13 @@
         <input id="searchTxt" name="Search" />
         <br />
         <button type="button" id="searchBtn"> Search </button>
-        <button type="button"> New </button>
+        <button type="button" id="newBtn"> New </button>
     </form>
 </div>
 
 <h2>Product Table</h2>
 
-<div >
+<div>
     <table>
         <thead>
             <tr>
@@ -32,8 +32,8 @@
                     <td> @item.Price </td>
                     <td>  category</td>
                     <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <button type="button" class="editBtn" data-id="@item.ID">Edit</button>
+                        <button type="button" class="deleteBtn" data-id="@item.ID">Delete</button>
                     </td>
                 </tr>
             }
@@ -48,7 +48,6 @@
 
         $.ajax({
             url: '/Product/ProductTable',
-            method: 'GET',
             data: {
                 search: searchVal
             }
@@ -58,7 +57,57 @@
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Fail");
-         });
+            });
+    });
+
+    $("#newBtn").click(function () {
+
+        $.ajax({
+            url: '/Product/Create',
+        })
+            .done(function (response) {
+                $("#actionCont").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+    $(".editBtn").click(function () {
+        //debugger;
+        $.ajax({
+            url: '/Product/Edit',
+            data: {
+                ID: $(this).attr('data-id')
+            }
+        })
+            .done(function (response) {
+                $("#actionCont").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+    $(".deleteBtn").click(function () {
+        //debugger;
+        var confirmDelete = confirm("Are you sure want to delete this product.");
+        if (confirmDelete) {
+            $.ajax({
+                type: 'POST',
+                url: '/Product/Delete',
+                data: {
+                    ID: $(this).attr('data-id')
+                }
+            })
+                .done(function (response) {
+                    $("#tableCont").html(response);
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Fail");
+                });
+        }
+       
     });
 
 </script>
