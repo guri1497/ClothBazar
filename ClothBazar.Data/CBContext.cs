@@ -8,13 +8,19 @@ using System.Threading.Tasks;
 
 namespace ClothBazar.Data
 {
+    /// <summary>
+    /// create cbcontext class inherit from dbcontext class
+    /// </summary>
    public class CBContext:DbContext,IDisposable
     {
+        /// <summary>
+        /// overrider contrustor which tells which database string is used
+        /// </summary>
         public CBContext():base("ClothBazarConnection")
         {
 
         }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; } // for creating category table in database
+        public DbSet<Product> Products { get; set; } // for creating product table in database
     }
 }

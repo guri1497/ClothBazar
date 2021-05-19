@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace ClothBazar.Services
 {
+    /// <summary>
+    /// get all products from database 
+    /// </summary>
+    /// <returns> all list of products </returns>
     public class ProductsService
     {
         public List<Product> GetProducts() // get all category list
@@ -18,6 +22,11 @@ namespace ClothBazar.Services
             }
         }
 
+        // <summary>
+        /// getting product by id from database
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns> single product based on ID</returns>
         public Product GetProductById(int ID) // get category by id
         {
             using (var context = new CBContext())
@@ -26,6 +35,10 @@ namespace ClothBazar.Services
             }
         }
 
+        /// <summary>
+        /// saving new product into database
+        /// </summary>
+        /// <param name="product"> input receive from end user using view</param>
         public void SaveProduct(Product product) // save category
         {
             using(var context = new CBContext())
@@ -35,6 +48,10 @@ namespace ClothBazar.Services
             }
         }
 
+        /// <summary>
+        /// update product
+        /// </summary>
+        /// <param name="product"> product data from end user</param>
         public void UpdateProduct(Product product) // update category
         {
             using (var context = new CBContext())
@@ -44,6 +61,10 @@ namespace ClothBazar.Services
             }
         }
 
+        /// <summary>
+        /// delete product from database
+        /// </summary>
+        /// <param name="ID"> ID of product which we want to delete</param>
         public void DeleteProduct(int ID) // delete category
         {
             using (var context = new CBContext())
