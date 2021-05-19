@@ -30,7 +30,7 @@ namespace ClothBazar.Web.Controllers
             var products = productsService.GetProducts();
             if(!string.IsNullOrEmpty(search))
             {
-                products = products.Where(p => p.Name.ToLower() != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+                products = products.Where(p => p.Name != null &&  p.Name.ToLower().Contains(search.ToLower())).ToList();
             }
             return PartialView(products);
         }
@@ -54,7 +54,28 @@ namespace ClothBazar.Web.Controllers
         public ActionResult Create(Product product) // save categories
         {
             productsService.SaveProduct(product);
-            return RedirectToAction("Product Table");
+            return RedirectToAction("ProductTable");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int ID) // create new category input field
+        {
+            var product = productsService.GetProductById(ID);
+            return PartialView(product);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Product product) // save categories
+        {
+            productsService.UpdateProduct(product);
+            return RedirectToAction("ProductTable");
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int ID) // save categories
+        {
+            productsService.DeleteProduct(ID);
+            return RedirectToAction("ProductTable");
         }
     }
 }
