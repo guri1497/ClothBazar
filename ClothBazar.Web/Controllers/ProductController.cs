@@ -11,6 +11,7 @@ namespace ClothBazar.Web.Controllers
     public class ProductController : Controller // controller added for all products
     {
         ProductsService productsService = new ProductsService();  // object for use services
+        CategoriesService categoriesService = new CategoriesService();
         
         /// <summary>
         /// showing all products
@@ -42,7 +43,8 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Create() // create new category input field
         {
-            return PartialView();
+            var categories = categoriesService.GetCategories();
+            return PartialView(categories);
         }
 
         /// <summary>
