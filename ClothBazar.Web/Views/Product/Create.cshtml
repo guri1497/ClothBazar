@@ -8,12 +8,11 @@
 <form id="createProductForm">
 
     <label>Category</label>
-    <select>
+    <select name="Category">
         @foreach (var item in Model)
         {
-            <option></option>
+            <option value="@item.ID">@item.Name</option>
         }
-
     </select>
     <br />
     <label>Name</label>
