@@ -59,6 +59,10 @@
     <Compile Include="Migrations\202105201908513_ImageUrlAdded.Designer.cs">
       <DependentUpon>202105201908513_ImageUrlAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105202121025_checking.cs" />
+    <Compile Include="Migrations\202105202121025_checking.Designer.cs">
+      <DependentUpon>202105202121025_checking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,6 +82,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105201908513_ImageUrlAdded.resx">
       <DependentUpon>202105201908513_ImageUrlAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105202121025_checking.resx">
+      <DependentUpon>202105202121025_checking.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
