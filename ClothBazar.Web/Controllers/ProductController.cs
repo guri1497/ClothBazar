@@ -25,12 +25,12 @@ namespace ClothBazar.Web.Controllers
         /// getting all products 
         /// </summary>
         /// <returns> product view </returns>
-        public ActionResult ProductTable(string search) // getting all products
+        public ActionResult ProductTable(string search) // this is main view of all product related operations
         {
-            var products = productsService.GetProducts();
-            if(!string.IsNullOrEmpty(search))
+            var products = productsService.GetProducts(); //take all products
+            if(!string.IsNullOrEmpty(search)) // using for search functionality
             {
-                products = products.Where(p => p.Name != null &&  p.Name.ToLower().Contains(search.ToLower())).ToList();
+                products = products.Where(p => p.Name != null &&  p.Name.ToLower().Contains(search.ToLower())).ToList(); // filter data based on input
             }
             return PartialView(products);
         }
@@ -57,6 +57,11 @@ namespace ClothBazar.Web.Controllers
             return RedirectToAction("ProductTable");
         }
 
+        /// <summary>
+        /// edit controller for edit product 
+        /// </summary>
+        /// <param name="ID"> which product is editing </param>
+        /// <returns>partial view of edit</returns>
         [HttpGet]
         public ActionResult Edit(int ID) // create new category input field
         {
@@ -64,6 +69,11 @@ namespace ClothBazar.Web.Controllers
             return PartialView(product);
         }
 
+        /// <summary>
+        /// post method of edit product
+        /// </summary>
+        /// <param name="product"> takes updated data from end user</param>
+        /// <returns> redirect to ProductTable Action </returns>
         [HttpPost]
         public ActionResult Edit(Product product) // save categories
         {
@@ -71,6 +81,11 @@ namespace ClothBazar.Web.Controllers
             return RedirectToAction("ProductTable");
         }
 
+        /// <summary>
+        /// for deleting the product
+        /// </summary>
+        /// <param name="ID"> which product is deleted</param>
+        /// <returns>  redirect to ProductTable Action </returns>
         [HttpPost]
         public ActionResult Delete(int ID) // save categories
         {
