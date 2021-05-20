@@ -3,8 +3,7 @@
     ViewBag.Title = "ProductTable";
 }
 
-<!--search functionality form-->
-<div> 
+<div>
     <form method="post">
         <input id="searchTxt" name="Search" />
         <br />
@@ -12,8 +11,6 @@
         <button type="button" id="newBtn"> New </button>
     </form>
 </div>
-
-<!--showing all products in table-->
 
 <h2>Product Table</h2>
 
@@ -46,19 +43,19 @@
 </div>
 
 <script>
-    $("#searchBtn").click(function () { // select element by id
+    $("#searchBtn").click(function () {
         var searchVal = $("#searchTxt").val();
 
-        $.ajax({ // start ajax function
-            url: '/Product/ProductTable', // path for which action method wants to call
+        $.ajax({
+            url: '/Product/ProductTable',
             data: {
-                search: searchVal  // put any data from current view
+                search: searchVal
             }
         })
-            .done(function (response) { // if task is completed then this piece of code runs
+            .done(function (response) {
                 $("#tableCont").html(response);
             })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) { // if task is failed then this piece of code runs
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Fail");
             });
     });
@@ -100,7 +97,7 @@
                 type: 'POST',
                 url: '/Product/Delete',
                 data: {
-                    ID: $(this).attr('data-id') // define custom attribute for using unique value in foreach loop
+                    ID: $(this).attr('data-id')
                 }
             })
                 .done(function (response) {

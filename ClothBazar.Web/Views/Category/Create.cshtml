@@ -11,40 +11,5 @@
     <label>Description</label>
     <input name="Description" />
     <br />
-    <input type="hidden" id="imageURL" name="ImageURL"/>
-    <input type="file" name="Image" id="imgUpload" accept=".png, .jpg, .jpeg"/>
-    <img id="imgCategory" height="100" width="80"/>
-    <br />
     <button type="submit">Save</button>
 </form>
-
-<script>
-    $("#imgUpload").change(function () {
-        var element = this; // refer to file upload field
-        var formData = new FormData();// create new form data object
-        var totalFiles = element.files.length; // check total number of files in element
-
-        for (var i = 0; i < totalFiles; i++) { // initliazie files one by one
-            var file = element.files[i];
-            formData.append("Photo", file); // put value into form data
-        }
-
-            $.ajax({
-                type: 'POST',
-                url: '/Shared/UploadImage',
-                dataType: 'json',
-                data: formData,
-                contentType: false,
-                processData: false
-            })
-                .done(function (response) {
-                    debugger;
-                    $("#imgCategory").attr("src", response.ImageUrl)
-                    $("#imageURL").val(response.ImageUrl);
-                })
-                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("Fail");
-                });
-        
-    });
-</script>
