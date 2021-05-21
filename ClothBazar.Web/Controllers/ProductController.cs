@@ -1,5 +1,6 @@
 ﻿using ClothBazar.Entities;
 using ClothBazar.Services;
+using ClothBazar.Web.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ClothBazar.Web.Controllers
     public class ProductController : Controller // controller added for all products
     {
         ProductsService productsService = new ProductsService();  // object for use services
+        CategoriesService categoriesService = new CategoriesService();
         
         /// <summary>
         /// showing all products
@@ -42,7 +44,8 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Create() // create new category input field
         {
-            return PartialView();
+            var categories = categoriesService.GetCategories();
+            return PartialView(categories);
         }
 
         /// <summary>
@@ -51,9 +54,15 @@ namespace ClothBazar.Web.Controllers
         /// <param name="product"> takes end user input from end user</param>
         /// <returns> redirect to index user for showing all category</returns>
         [HttpPost]
-        public ActionResult Create(Product product) // save categories
+        public ActionResult Create(NewCategoryViewModels newCategoryViewModels) // save categories
         {
-            productsService.SaveProduct(product);
+            var newProduct = new Product();
+            newProduct.Name = newCategoryViewModels.Name;
+            newProduct.Price = newCategoryViewModels.Price;
+            newProduct.Description = newCategoryViewModels.Description;
+            //newProduct.CategoryID = newCategoryViewModels.CategoryID; // use this if dont want extra call to database see Product entity
+            newProduct.Category = categoriesService.GetCategoryById(newCategoryViewModels.CategoryID);
+            productsService.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
         }
 

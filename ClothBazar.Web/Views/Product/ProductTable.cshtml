@@ -33,7 +33,17 @@
                 <tr>
                     <td> @item.Name </td>
                     <td> @item.Price </td>
-                    <td>  category</td>
+                    <td>
+                        @if (item.Category != null)
+                        {
+                            <text> @item.Category.Name </text>
+                        }
+                        else
+                        {
+                            <text> --- </text>
+                        }
+
+                    </td>
                     <td>
                         <button type="button" class="editBtn" data-id="@item.ID">Edit</button>
                         <button type="button" class="deleteBtn" data-id="@item.ID">Delete</button>
