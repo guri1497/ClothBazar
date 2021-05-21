@@ -4,21 +4,40 @@
 }
 
 <!--search functionality form-->
-<div> 
+<div class="my-4">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <input id="searchTxt" name="Search" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <button type="button" id="searchBtn"> Search </button>
+                    <button type="button" id="newBtn"> New </button>
+
+                </div>
+             </div>
+        </div>
+    </form>
+</div>
+
+@*<div> 
     <form method="post">
         <input id="searchTxt" name="Search" />
         <br />
         <button type="button" id="searchBtn"> Search </button>
         <button type="button" id="newBtn"> New </button>
     </form>
-</div>
+</div>*@
 
 <!--showing all products in table-->
 
 <h2>Product Table</h2>
 
 <div>
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <td> Name </td>
