@@ -18,32 +18,13 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Index() // get all categories
         {
+            return View();
+        }
+
+        public ActionResult CategoryTable()
+        {
             var categories = categoriesService.GetCategories();
-            return View(categories);
-        }
-
-        /// <summary>
-        /// edit categories
-        /// </summary>
-        /// <param name="ID"> id of category </param>
-        /// <returns>edit view and take category </returns>
-        [HttpGet]
-        public ActionResult Edit(int ID) // edit new category 
-        {
-            var category = categoriesService.GetCategoryById(ID);
-            return View(category);
-        }
-
-        /// <summary>
-        /// post method for saveing edited category
-        /// </summary>
-        /// <param name="category"> inpur received from end user </param>
-        /// <returns> redirect to index method after saving data</returns>
-        [HttpPost]
-        public ActionResult Edit(Category category) // edit category
-        {
-            categoriesService.UpdateCategory(category);
-            return RedirectToAction("Index");
+            return PartialView(categories);
         }
 
         /// <summary>
@@ -53,7 +34,7 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Create() // create new category input field
         {
-            return View();
+            return PartialView();
         }
 
         /// <summary>
@@ -65,19 +46,31 @@ namespace ClothBazar.Web.Controllers
         public ActionResult Create(Category category) // save categories
         {
             categoriesService.SaveCategory(category);
-            return RedirectToAction("Index");
+            return RedirectToAction("CategoryTable");
         }
 
         /// <summary>
-        /// delete method for deleting category
+        /// edit categories
         /// </summary>
-        /// <param name="ID"> takes category id which we want to delete</param>
-        /// <returns> showing delete view </returns>
+        /// <param name="ID"> id of category </param>
+        /// <returns>edit view and take category </returns>
         [HttpGet]
-        public ActionResult Delete(int ID) // edit new category 
+        public ActionResult Edit(int ID) // edit new category 
         {
             var category = categoriesService.GetCategoryById(ID);
-            return View(category);
+            return PartialView(category);
+        }
+
+        /// <summary>
+        /// post method for saveing edited category
+        /// </summary>
+        /// <param name="category"> inpur received from end user </param>
+        /// <returns> redirect to index method after saving data</returns>
+        [HttpPost]
+        public ActionResult Edit(Category category) // edit category
+        {
+            categoriesService.UpdateCategory(category);
+            return RedirectToAction("CategoryTable");
         }
 
         /// <summary>
@@ -89,7 +82,7 @@ namespace ClothBazar.Web.Controllers
         public ActionResult Delete(Category category) // edit category
         {
             categoriesService.DeleteCategory(category.ID);
-            return RedirectToAction("Index");
+            return RedirectToAction("CategoryTable");
         }
 
     }

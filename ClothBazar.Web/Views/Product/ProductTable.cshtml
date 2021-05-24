@@ -23,15 +23,6 @@
     </form>
 </div>
 
-@*<div> 
-    <form method="post">
-        <input id="searchTxt" name="Search" />
-        <br />
-        <button type="button" id="searchBtn"> Search </button>
-        <button type="button" id="newBtn"> New </button>
-    </form>
-</div>*@
-
 <!--showing all products in table-->
 
 <h2>Product Table</h2>
@@ -98,6 +89,7 @@
             url: '/Product/Create',
         })
             .done(function (response) {
+                console.log(response);
                 $("#actionCont").html(response);
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {

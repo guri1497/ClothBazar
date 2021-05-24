@@ -5,7 +5,7 @@
 
 <h2>Edit Category</h2>
 
-<form method="post">
+<form id="editCategoryForm">
     <label>ID</label>
     <input type="hidden" name="ID" value="@Model.ID" />
     <br />
@@ -15,5 +15,25 @@
     <label>Description</label>
     <input name="Description" value="@Model.Description" />
     <br />
-    <button type="submit">Save</button>
+    <button id="btnUpdateCategory" type="button">Save</button>
 </form>
+
+
+<script>
+    $("#btnUpdateCategory").click(function () {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Category/Edit',
+            data: $("#editCategoryForm").serialize()
+        })
+            .done(function (response) {
+                $("#categoryTableCont").html(response);
+                $("#categoryActionCont").html("");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+</script>
