@@ -63,6 +63,10 @@
     <Compile Include="Migrations\202105202121025_checking.Designer.cs">
       <DependentUpon>202105202121025_checking.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105241957494_isFeaturedPropertyAdded.cs" />
+    <Compile Include="Migrations\202105241957494_isFeaturedPropertyAdded.Designer.cs">
+      <DependentUpon>202105241957494_isFeaturedPropertyAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -85,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105202121025_checking.resx">
       <DependentUpon>202105202121025_checking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105241957494_isFeaturedPropertyAdded.resx">
+      <DependentUpon>202105241957494_isFeaturedPropertyAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

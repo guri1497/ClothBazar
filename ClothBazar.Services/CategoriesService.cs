@@ -22,6 +22,14 @@ namespace ClothBazar.Services
             }
         }
 
+        public List<Category> GetFeaturedCategories() // get all category list
+        {
+            using (var context = new CBContext())
+            {
+                return context.Categories.ToList();
+            }
+        }
+
         /// <summary>
         /// getting category by id from database
         /// </summary>

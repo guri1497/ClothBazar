@@ -10,5 +10,6 @@ namespace ClothBazar.Entities
     {
         public string ImageURL { get; set; }
         public List<Product> Products { get; set; } // prop for showing products under category
+        public bool isFeatured { get; set; }
     }
 }
