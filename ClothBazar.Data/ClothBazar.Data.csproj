@@ -67,6 +67,18 @@
     <Compile Include="Migrations\202105241957494_isFeaturedPropertyAdded.Designer.cs">
       <DependentUpon>202105241957494_isFeaturedPropertyAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105242328394_addedImageUrlPropForProduct.cs" />
+    <Compile Include="Migrations\202105242328394_addedImageUrlPropForProduct.Designer.cs">
+      <DependentUpon>202105242328394_addedImageUrlPropForProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105251555459_added.cs" />
+    <Compile Include="Migrations\202105251555459_added.Designer.cs">
+      <DependentUpon>202105251555459_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105251610500_added1.cs" />
+    <Compile Include="Migrations\202105251610500_added1.Designer.cs">
+      <DependentUpon>202105251610500_added1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -92,6 +104,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105241957494_isFeaturedPropertyAdded.resx">
       <DependentUpon>202105241957494_isFeaturedPropertyAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105242328394_addedImageUrlPropForProduct.resx">
+      <DependentUpon>202105242328394_addedImageUrlPropForProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105251555459_added.resx">
+      <DependentUpon>202105251555459_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105251610500_added1.resx">
+      <DependentUpon>202105251610500_added1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

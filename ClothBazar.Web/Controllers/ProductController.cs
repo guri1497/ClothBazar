@@ -60,7 +60,8 @@ namespace ClothBazar.Web.Controllers
             newProduct.Name = newCategoryViewModels.Name;
             newProduct.Price = newCategoryViewModels.Price;
             newProduct.Description = newCategoryViewModels.Description;
-            //newProduct.CategoryID = newCategoryViewModels.CategoryID; // use this if dont want extra call to database see Product entity
+            newProduct.ImageURL = newCategoryViewModels.ImageURL;
+            newProduct.CategoryID = newCategoryViewModels.CategoryID; // use this if dont want extra call to database see Product entity
             newProduct.Category = categoriesService.GetCategoryById(newCategoryViewModels.CategoryID);
             productsService.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
@@ -74,8 +75,10 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int ID) // create new category input field
         {
-            var product = productsService.GetProductById(ID);
-            return PartialView(product);
+            //var model = new HomeViewModel();
+            var model = productsService.GetProductById(ID);
+            //model.Categories = categoriesService.GetCategories();
+            return PartialView(model);
         }
 
         /// <summary>

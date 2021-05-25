@@ -16,7 +16,11 @@
     </form>
 </div>
 
-<h2>CategoryTable</h2>
+<div class="title-section">
+    <h2 class="title">
+        Category
+    </h2>
+</div>
 
 <div>
     <table class="table table-striped">
@@ -24,22 +28,30 @@
             <tr>
                 <td> Name </td>
                 <td> Description </td>
-                <td> Image </td>
+                <td> Products </td>
             </tr>
         </thead>
         <tbody>
-            @foreach (var category in Model)
+            @if (Model != null && Model.Count > 0)
             {
-                <tr>
-                    <td> @category.Name </td>
-                    <td> @category.Description </td>
-                    <td> Image not avaliable because not set in View. </td>
-                    <td>
-                        <button type="button" class="editBtn" data-id="@category.ID">Edit</button>
-                        <button type="button" class="deleteBtn" data-id="@category.ID">Delete</button>
-                    </td>
-                </tr>
+                foreach (var category in Model)
+                {
+                    <tr>
+                        <td> @category.Name </td>
+                        <td> @category.Description </td>
+                        <td> @category.Products.Count </td>
+                        <td>
+                            <button type="button" class="editBtn" data-id="@category.ID">Edit</button>
+                            <button type="button" class="deleteBtn" data-id="@category.ID">Delete</button>
+                        </td>
+                    </tr>
+                }
             }
+            else
+            {
+                <tr><td colspan="3" class="text-danger"> No Categories Found </td></tr>
+            }
+
         </tbody>
     </table>
 
@@ -58,6 +70,7 @@
         })
             .done(function (response) {
                 $("#categoryActionCont").html(response);
+                focusAction();
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Fail");
@@ -77,6 +90,7 @@
             })
                 .done(function (response) {
                     $("#categoryTableCont").html(response);
+
                 })
                 .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Fail");
@@ -94,11 +108,17 @@
             .done(function (response) {
                 console.log(response);
                 $("#categoryActionCont").html(response);
+                focusAction();
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Fail");
             });
     });
 
+    function focusAction() {
+        $("html, body").animate({
+            scrollTop: $("#categoryActionCont").offset().top - 100
+        }, 1000);
+    }
 
 </script>

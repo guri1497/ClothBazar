@@ -1,5 +1,6 @@
 ﻿using ClothBazar.Entities;
 using ClothBazar.Services;
+using ClothBazar.Web.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,8 @@ namespace ClothBazar.Web.Controllers
 
         public ActionResult CategoryTable()
         {
-            var categories = categoriesService.GetCategories();
-            return PartialView(categories);
+            var category = categoriesService.GetCategories();
+            return PartialView(category);
         }
 
         /// <summary>

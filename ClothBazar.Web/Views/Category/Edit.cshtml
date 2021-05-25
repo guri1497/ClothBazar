@@ -1,25 +1,88 @@
 ﻿@model ClothBazar.Entities.Category
 @{
     ViewBag.Title = "Edit";
+    var trueChecked = Model.isFeatured ? "checked" : string.Empty;
+    var falseChecked = !Model.isFeatured ? "checked" : string.Empty;
+    var ImageURLCheck = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/default image.png";
 }
+<div class="title-section">
+    <h2 class="title">
+       Edit Category
+    </h2>
+</div>
 
-<h2>Edit Category</h2>
+    <form id="editCategoryForm">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input type="text" name="Name" class="form-control" id="Name" aria-describedby="nameHelp" placeholder="Enter Name" value="@Model.Name" />
+                </div>
+                <div class="form-group">
+                    <label for="Description">Description</label>
+                    <input type="text" name="Description" class="form-control" id="Description" placeholder="Enter Description." value="@Model.Description">
+                </div>
+                <div class="form-group">
+                    <label for="isFeatured">is Featured?</label>
+                    <input type="radio" name="isFeatured" class="form-control" value="true" @trueChecked />True
+                    <input type="radio" name="isFeatured" class="form-control" value="false" @falseChecked />False
+                </div>
+            </div>
+            
 
-<form id="editCategoryForm">
-    <label>ID</label>
-    <input type="hidden" name="ID" value="@Model.ID" />
-    <br />
-    <label>Name</label>
-    <input name="Name" value="@Model.Name" />
-    <br />
-    <label>Description</label>
-    <input name="Description" value="@Model.Description" />
-    <br />
-    <button id="btnUpdateCategory" type="button">Save</button>
-</form>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Image">Select New Image</label>
+                    <input type="hidden" id="imageURL" name="ImageURL" />
+                    <input type="file" name="Image" id="imgUpload" accept=".png, .jpg, .jpeg" class="form-control-file" />
+
+                </div>
+                <div class="form-group">
+                    <div class="thumb">
+                        <img src="@ImageURLCheck" class="img-thumbnail img-fluid" id="imgCategory"/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    
+        <button type="button" id="btnUpdateCategory" class="btn btn-danger">Save</button>
+    </form>
+
+
 
 
 <script>
+    $("#imgUpload").change(function () {
+        var element = this; // refer to file upload field
+        var formData = new FormData();// create new form data object
+        var totalFiles = element.files.length; // check total number of files in element
+
+        for (var i = 0; i < totalFiles; i++) { // initliazie files one by one
+            var file = element.files[i];
+            formData.append("Photo", file); // put value into form data
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Shared/UploadImage',
+            dataType: 'json',
+            data: formData,
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+                //debugger;
+                $("#imgCategory").attr("src", response.ImageUrl)
+                $("#imageURL").val(response.ImageUrl);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+
+    });
+
     $("#btnUpdateCategory").click(function () {
 
         $.ajax({
