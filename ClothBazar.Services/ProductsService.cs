@@ -36,14 +36,6 @@ namespace ClothBazar.Services
             }
         }
 
-        public List<Product> GetProductByIDs(List<int> IDs) // get category by id
-        {
-            using (var context = new CBContext())
-            {
-                return context.Products.Where(product => IDs.Contains(product.ID)).ToList();
-            }
-        }
-
         /// <summary>
         /// saving new product into database
         /// </summary>
