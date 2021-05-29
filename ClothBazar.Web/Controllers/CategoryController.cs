@@ -25,6 +25,9 @@ namespace ClothBazar.Web.Controllers
         public ActionResult CategoryTable()
         {
             var category = categoriesService.GetCategories();
+
+            //HomeViewModel homeViewModel = new HomeViewModel();
+            //homeViewModel.Categories = categoriesService.GetCategories();
             return PartialView(category);
         }
 

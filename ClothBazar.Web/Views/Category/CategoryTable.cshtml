@@ -29,6 +29,7 @@
                 <td> Name </td>
                 <td> Description </td>
                 <td> Products </td>
+                <td> Actions </td>
             </tr>
         </thead>
         <tbody>
@@ -114,7 +115,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/Category/Create',
+            url: "/Category/Create", 
         })
             .done(function (response) {
                 console.log(response);

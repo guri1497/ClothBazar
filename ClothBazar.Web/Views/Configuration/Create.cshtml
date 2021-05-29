@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="title-section">
+    <h2 class="title">
+        Create New Configuration
+    </h2>
+</div>
+
+<div>
+    <form id="createConfigurationForm">
+        <div class="form-group">
+            <label for="Key">Key</label>
+            <input type="text" name="Key" class="form-control" id="Name" aria-describedby="nameHelp" placeholder="Enter Key." />
+        </div>
+        <div class="form-group">
+            <label for="Value">Value</label>
+            <input type="text" name="Value" class="form-control" id="Description" placeholder="Enter Value.">
+        </div>
+        <div class="form-group">
+            <button id="btnCreateConfig"> Create </button>
+        </div>
+     </form>
+</div>
+
+<script>
+    $("#btnCreateConfig").click(function () {
+
+        $.ajax({
+            type: 'Post',
+            url: '/Configuration/Create',
+            data: $("#createConfigurationForm").serialize()
+        })
+            .done(function (response) {
+                $("#configurationTableCont").html(response);
+                $("#configurationActionCont").html("");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+</script>

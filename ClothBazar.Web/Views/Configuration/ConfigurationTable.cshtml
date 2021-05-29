@@ -1,0 +1,147 @@
+﻿@model List<Configuration>
+@{
+    ViewBag.Title = "Configuration";
+}
+
+<!--search functionality form-->
+<div class="my-4">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <input id="searchTxt" name="Search" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <button type="button" id="searchBtn"> Search </button>
+                    <button type="button" id="newBtn"> New </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--showing all configurations in table-->
+<div class="title-section">
+    <h2 class="title">
+        Configurations
+    </h2>
+</div>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td> Key </td>
+                <td> Value </td>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td> @item.Key </td>
+                    <td> @item.Value </td>
+                    <td>
+                        <button type="button" class="editBtn" data-key="@item.Key">Edit</button>
+                        <button type="button" class="deleteBtn" data-key="@item.Key">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<div>
+    <script>
+        $("#searchBtn").click(function () { // select element by id
+            var searchVal = $("#searchTxt").val();
+
+            $.ajax({ // start ajax function
+                url: '/Configuration/ConfigurationTable', // path for which action method wants to cal
+                data: {
+                    search: searchVal  // put any data from current view
+                }
+            })
+                .done(function (response) { // if task is completed then this piece of code runs
+                    $("#configurationTableCont").html(response);
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) { // if task is failed then this piece of code runs
+                    alert("Fail");
+                });
+        });
+
+        $("#newBtn").click(function () {
+
+            $.ajax({
+                type:'Get',
+                url: '/Configuration/Create',
+            })
+                .done(function (response) {
+                    console.log(response);
+                    $("#configurationActionCont").html(response);
+                    focusAction();
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Fail");
+                });
+        });
+
+        $(".editBtn").click(function () {
+            //debugger;
+            $.ajax({
+                type:'GET',
+                url: '/Configuration/Edit',
+                data: {
+                    Key: $(this).attr('data-key')
+                }
+            })
+                .done(function (response) {
+                    $("#configurationActionCont").html(response);
+                    focusAction();
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Fail");
+                });
+        });
+
+        $(".deleteBtn").click(function () {
+            swal({
+                title: "Confirm?",
+                text: "Are you sure want to delete this configuration.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                    type: 'POST',
+                    url: '/Configuration/Delete',
+                    data: {
+                        Key: $(this).attr('data-key') // define custom attribute for using unique value in foreach loop
+                    }
+                })
+                    .done(function (response) {
+                        $("#configurationTableCont").html(response);
+                        swal("Record has been Deleted.", {
+                            icon: "success",
+                        });
+                    })
+                    .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Fail");
+                    });
+                    }
+                });
+        });
+
+        function focusAction() {
+            $("html, body").animate({
+                scrollTop: $("#configurationActionCont").offset().top - 100
+            }, 1000);
+        }
+
+    </script>
+</div>

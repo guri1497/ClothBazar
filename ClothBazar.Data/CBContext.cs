@@ -22,5 +22,6 @@ namespace ClothBazar.Data
         }
         public DbSet<Category> Categories { get; set; } // for creating category table in database
         public DbSet<Product> Products { get; set; } // for creating product table in database
+        public DbSet<Configuration> Configurations { get; set; } // for creating config table in database
     }
 }

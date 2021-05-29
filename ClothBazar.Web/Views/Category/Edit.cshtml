@@ -34,8 +34,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="Image">Select New Image</label>
-                    <input type="hidden" id="imageURL" name="ImageURL" />
-                    <input type="file" name="Image" id="imgUpload" accept=".png, .jpg, .jpeg" class="form-control-file" />
+                    <input type="hidden" id="imageURL" value="@ImageURLCheck" name="ImageURL" />
+                    <input type="file" name="Image" id="imgUpload" value="@ImageURLCheck" accept=".png, .jpg, .jpeg" class="form-control-file" />
 
                 </div>
                 <div class="form-group">
@@ -55,6 +55,7 @@
 
 <script>
     $("#imgUpload").change(function () {
+
         var element = this; // refer to file upload field
         var formData = new FormData();// create new form data object
         var totalFiles = element.files.length; // check total number of files in element
