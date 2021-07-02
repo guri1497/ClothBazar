@@ -15,11 +15,27 @@ namespace ClothBazar.Services
     /// <returns> all list of products </returns>
     public class ProductsService
     {
-        public List<Product> GetProducts() // get all category list
+        #region Singleton
+        public static ProductsService Instance { get // singleton method of using object of class
+            {
+                if (instance == null) instance = new ProductsService();
+                return instance;
+            } } 
+        private static ProductsService instance { get; set; } // singleton
+        public ProductsService()
         {
+
+        }
+        #endregion
+
+        #region GetProducts
+        public List<Product> GetProducts(int PageNo) // get all category list
+        {
+            var pageSize = 10;
             using (var context = new CBContext())
             {
-                return context.Products.Include(x=>x.Category).ToList();
+                return context.Products.OrderBy(p=>p.ID).Skip((PageNo-1)*pageSize).Take(pageSize).Include(x=>x.Category).ToList(); // for paginaion
+               // return context.Products.Include(x => x.Category).ToList(); // for paginaion
             }
         }
 
@@ -44,6 +60,9 @@ namespace ClothBazar.Services
             }
         }
 
+        #endregion
+
+        #region Creation
         /// <summary>
         /// saving new product into database
         /// </summary>
@@ -57,7 +76,9 @@ namespace ClothBazar.Services
                 context.SaveChanges();
             }
         }
+        #endregion
 
+        #region Updation
         /// <summary>
         /// update product
         /// </summary>
@@ -70,7 +91,9 @@ namespace ClothBazar.Services
                 context.SaveChanges();
             }
         }
+        #endregion
 
+        #region Deletion
         /// <summary>
         /// delete product from database
         /// </summary>
@@ -85,5 +108,6 @@ namespace ClothBazar.Services
                 context.SaveChanges();
             }
         }
+        #endregion
     }
 }

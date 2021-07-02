@@ -11,44 +11,45 @@
     </h2>
 </div>
 
-    <form id="editCategoryForm">
-        <div class="row">
-            <div class="col-md-6">
-                <input type="hidden" name="ID" value="@Model.ID" />
-                <div class="form-group">
-                    <label for="Name">Name</label>
-                    <input type="text" name="Name" class="form-control" id="Name" aria-describedby="nameHelp" placeholder="Enter Name" value="@Model.Name" />
-                </div>
-                <div class="form-group">
-                    <label for="Description">Description</label>
-                    <input type="text" name="Description" class="form-control" id="Description" placeholder="Enter Description." value="@Model.Description">
-                </div>
-                <div class="form-group">
-                    <label for="isFeatured">is Featured?</label>
-                    <input type="radio" name="isFeatured" class="form-control" value="true" @trueChecked />True
-                    <input type="radio" name="isFeatured" class="form-control" value="false" @falseChecked />False
-                </div>
+<form id="editCategoryForm">
+    <div class="row">
+        <div class="col-md-6">
+            <input type="hidden" name="ID" value="@Model.ID" />
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <input type="text" name="Name" class="form-control" id="Name" aria-describedby="nameHelp" placeholder="Enter Name" value="@Model.Name" />
             </div>
-            
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="Image">Select New Image</label>
-                    <input type="hidden" id="imageURL" value="@ImageURLCheck" name="ImageURL" />
-                    <input type="file" name="Image" id="imgUpload" value="@ImageURLCheck" accept=".png, .jpg, .jpeg" class="form-control-file" />
-
-                </div>
-                <div class="form-group">
-                    <div class="thumb">
-                        <img src="@ImageURLCheck" class="img-thumbnail img-fluid" id="imgCategory"/>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="Description">Description</label>
+                <input type="text" name="Description" class="form-control" id="Description" placeholder="Enter Description." value="@Model.Description">
             </div>
-
+            <div class="form-group">
+                <label for="isFeatured">is Featured?</label>
+                <input type="radio" name="isFeatured" class="form-control" value="true" @trueChecked />True
+                <input type="radio" name="isFeatured" class="form-control" value="false" @falseChecked />False
+            </div>
         </div>
-    
-        <button type="button" id="btnUpdateCategory" class="btn btn-danger">Save</button>
-    </form>
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Image">Select New Image</label>
+                <input type="hidden" id="imageURL" value="@ImageURLCheck" name="ImageURL" />
+                <input type="file" name="Image" id="imgUpload" value="@ImageURLCheck" accept=".png, .jpg, .jpeg" class="form-control-file" />
+
+            </div>
+            <div class="form-group">
+                <div class="thumb">
+                    <img src="@ImageURLCheck" class="img-thumbnail img-fluid" id="imgCategory" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <button type="button" id="btnUpdateCategory" class="btn btn-danger">Save</button>
+    <button type="button" id="btnCancel" class="btn btn-danger">Cancel</button>
+</form>
 
 
 
@@ -94,10 +95,15 @@
             .done(function (response) {
                 $("#categoryTableCont").html(response);
                 $("#categoryActionCont").html("");
+                focusAction("categoryTableCont");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Fail");
             });
     });
 
+    $("#btnCancel").click(function () {
+        $("#categoryActionCont").html("");
+        focusAction("categoryTableCont");
+    });
 </script>

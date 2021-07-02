@@ -18,3 +18,11 @@
     </div>
 
 </div>
+
+<script>
+    function focusAction(focusDiv) {
+        $("html, body").animate({
+            scrollTop: $("#" + focusDiv).offset().top - 100
+        }, 1000);
+    }
+</script>

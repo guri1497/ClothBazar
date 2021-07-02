@@ -10,7 +10,21 @@ namespace ClothBazar.Services
 {
     public class ConfigurationsService
     {
+        #region Singleton
+        public static ConfigurationsService Instance
+        {
+            get // singleton method of using object of class
+            {
+                if (instance == null) instance = new ConfigurationsService();
+                return instance;
+            }
+        }
+        private static ConfigurationsService instance { get; set; } // singleton
+        public ConfigurationsService()
+        {
 
+        }
+        #endregion
         public List<Configuration> GetConfiguration() // get all category list
         {
             using (var context = new CBContext())

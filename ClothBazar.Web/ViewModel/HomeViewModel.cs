@@ -14,5 +14,6 @@ namespace ClothBazar.Web.ViewModel
         public List<Product> FeaturedProducts { get; set; } // featured products
         public Category Category { get; set; }
         public Product Product { get; set; }
+        public int PageNo { get; set; }
     }
 }

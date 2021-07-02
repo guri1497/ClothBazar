@@ -10,7 +10,7 @@ namespace ClothBazar.Web.Controllers
 {
     public class ConfigurationController : Controller
     {
-        ConfigurationsService configurationsService = new ConfigurationsService();
+        //ConfigurationsService configurationsService = new ConfigurationsService();
         // GET: Configuration
         public ActionResult Index()
         {
@@ -19,7 +19,7 @@ namespace ClothBazar.Web.Controllers
 
         public ActionResult ConfigurationTable(string Search)
         {
-            var config = configurationsService.GetConfiguration();
+            var config = ConfigurationsService.Instance.GetConfiguration();
             if (!string.IsNullOrEmpty(Search)) // using for search functionality
             {
                 config = config.Where(c => c.Key != null && c.Key.ToLower().Contains(Search.ToLower())).ToList(); // filter data based on input
@@ -36,28 +36,28 @@ namespace ClothBazar.Web.Controllers
         [HttpPost]
         public ActionResult Create(Configuration config)
          {
-            configurationsService.SaveConfiguration(config);
+            ConfigurationsService.Instance.SaveConfiguration(config);
             return RedirectToAction("ConfigurationTable");
         }
 
         [HttpGet]
         public ActionResult Edit(string Key)
         {
-            var model = configurationsService.GetConfigurationByKey(Key);
+            var model = ConfigurationsService.Instance.GetConfigurationByKey(Key);
             return PartialView(model);
         }
 
         [HttpPost]
         public ActionResult Edit(Configuration configuration) // save categories
         {
-            configurationsService.UpdateConfiguration(configuration);
+            ConfigurationsService.Instance.UpdateConfiguration(configuration);
             return RedirectToAction("ConfigurationTable");
         }
 
         [HttpPost]
         public ActionResult Delete(string Key) // save categories
         {
-            configurationsService.DeleteConfiguration(Key);
+            ConfigurationsService.Instance.DeleteConfiguration(Key);
             return RedirectToAction("ConfigurationTable");
         }
 

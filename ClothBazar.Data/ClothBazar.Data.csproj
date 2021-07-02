@@ -51,41 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CBContext.cs" />
-    <Compile Include="Migrations\202105181721069_initiliazed.cs" />
-    <Compile Include="Migrations\202105181721069_initiliazed.designer.cs">
-      <DependentUpon>202105181721069_initiliazed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105201908513_ImageUrlAdded.cs" />
-    <Compile Include="Migrations\202105201908513_ImageUrlAdded.Designer.cs">
-      <DependentUpon>202105201908513_ImageUrlAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105202121025_checking.cs" />
-    <Compile Include="Migrations\202105202121025_checking.Designer.cs">
-      <DependentUpon>202105202121025_checking.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105241957494_isFeaturedPropertyAdded.cs" />
-    <Compile Include="Migrations\202105241957494_isFeaturedPropertyAdded.Designer.cs">
-      <DependentUpon>202105241957494_isFeaturedPropertyAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105242328394_addedImageUrlPropForProduct.cs" />
-    <Compile Include="Migrations\202105242328394_addedImageUrlPropForProduct.Designer.cs">
-      <DependentUpon>202105242328394_addedImageUrlPropForProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105251555459_added.cs" />
-    <Compile Include="Migrations\202105251555459_added.Designer.cs">
-      <DependentUpon>202105251555459_added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105251610500_added1.cs" />
-    <Compile Include="Migrations\202105251610500_added1.Designer.cs">
-      <DependentUpon>202105251610500_added1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105291540599_configurationAdded.cs" />
-    <Compile Include="Migrations\202105291540599_configurationAdded.Designer.cs">
-      <DependentUpon>202105291540599_configurationAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105291548475_configurationAdded1.cs" />
-    <Compile Include="Migrations\202105291548475_configurationAdded1.Designer.cs">
-      <DependentUpon>202105291548475_configurationAdded1.cs</DependentUpon>
+    <Compile Include="Migrations\202107011857531_intialize.cs" />
+    <Compile Include="Migrations\202107011857531_intialize.Designer.cs">
+      <DependentUpon>202107011857531_intialize.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,32 +69,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202105181721069_initiliazed.resx">
-      <DependentUpon>202105181721069_initiliazed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105201908513_ImageUrlAdded.resx">
-      <DependentUpon>202105201908513_ImageUrlAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105202121025_checking.resx">
-      <DependentUpon>202105202121025_checking.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105241957494_isFeaturedPropertyAdded.resx">
-      <DependentUpon>202105241957494_isFeaturedPropertyAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105242328394_addedImageUrlPropForProduct.resx">
-      <DependentUpon>202105242328394_addedImageUrlPropForProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105251555459_added.resx">
-      <DependentUpon>202105251555459_added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105251610500_added1.resx">
-      <DependentUpon>202105251610500_added1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105291540599_configurationAdded.resx">
-      <DependentUpon>202105291540599_configurationAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105291548475_configurationAdded1.resx">
-      <DependentUpon>202105291548475_configurationAdded1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202107011857531_intialize.resx">
+      <DependentUpon>202107011857531_intialize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

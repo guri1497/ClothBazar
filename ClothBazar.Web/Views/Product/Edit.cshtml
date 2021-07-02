@@ -1,7 +1,7 @@
-﻿@model Product
+﻿@model ClothBazar.Web.ViewModel.HomeViewModel
 @{ 
     ViewBag.Title = "Edit";
-    var ImageURLCheck = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/default image.png";
+    var ImageURLCheck = !string.IsNullOrEmpty(Model.Product.ImageURL) ? Model.Product.ImageURL : "/Content/images/default image.png";
 }
 
 <div class="title-section">
@@ -13,29 +13,29 @@
 <form id="editProductForm">
     <div class="row">
         <div class="col-md-6">
-            <input type="hidden" name="ID" value="@Model.ID" />
+            <input type="hidden" name="ID" value="@Model.Product.ID" />
             <div class="form-group">
                 <label for="Name">Name</label>
-                <input type="text" name="Name" class="form-control" id="Name" aria-describedby="nameHelp" placeholder="Enter Name" value="@Model.Name" />
+                <input type="text" name="Name" class="form-control" id="Name" aria-describedby="nameHelp" placeholder="Enter Name" value="@Model.Product.Name" />
             </div>
             <div class="form-group">
                 <label for="Description">Description</label>
-                <input type="text" name="Description" class="form-control" id="Description" placeholder="Enter Description." value="@Model.Description">
+                <input type="text" name="Description" class="form-control" id="Description" placeholder="Enter Description." value="@Model.Product.Description">
             </div>
             <div class="form-group">
                 <label for="Price">Price</label>
-                <input type="text" name="Price" class="form-control" id="Price" placeholder="Enter Price." value="@Model.Price">
+                <input type="text" name="Price" class="form-control" id="Price" placeholder="Enter Price." value="@Model.Product.Price">
             </div>
             <div class="form-group">
                 <label for="Category">Category</label>
-                @*<select name="CategoryID" class="form-control">
-                   
-                        @foreach (var category in Model)
-                        {
-                            <option value="@category.ID">@category.Name</option>
-                        }
+                <select name="CategoryID" class="form-control">
 
-                </select>*@
+                            @foreach (var category in Model.Categories)
+                            {
+                                <option value="@category.ID">@category.Name</option>
+                            }
+
+                    </select>
             </div>
         </div>
 
@@ -43,8 +43,8 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="Image">Select New Image</label>
-                <input type="hidden" id="imageURL" name="ImageURL" />
-                <input type="file" name="Image" id="imgUpload" accept=".png, .jpg, .jpeg" class="form-control-file" />
+                <input type="hidden" id="imageURL" name="ImageURL" value="@ImageURLCheck"/>
+                <input type="file" name="Image" id="imgUpload" accept=".png, .jpg, .jpeg" value="@ImageURLCheck" class="form-control-file" />
 
             </div>
             <div class="form-group">
@@ -57,6 +57,8 @@
     </div>
 
     <button type="button" id="btnUpdateProduct" class="btn btn-danger">Save</button>
+
+    <button type="button" id="btnCancel" class="btn btn-danger">Cancel</button>
 </form>
 
 
@@ -101,10 +103,15 @@
             .done(function (response) {
                 $("#tableCont").html(response);
                 $("#actionCont").html("");
+               /* focusAction("tableCont");*/
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Fail");
             });
     });
 
+    $("#btnCancel").click(function () {
+        $("#actionCont").html("");
+        focusAction("tableCont");
+    });
 </script>

@@ -32,6 +32,7 @@
             <input type="radio" name="isFeatured" class="form-control" value="false">False
         </div>
         <button type="button" id="btnCategoryCreate" class="btn btn-danger">Save</button>
+        <button type="button" id="btnCancel" class="btn btn-danger">Cancel</button>
     </form>
 
 </div>
@@ -76,10 +77,15 @@
             .done(function (response) {
                 $("#categoryTableCont").html(response);
                 $("#categoryActionCont").html("");
+                focusAction("categoryTableCont");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Fail");
             });
     });
 
+    $("#btnCancel").click(function () {
+        $("#categoryActionCont").html("");
+        focusAction("categoryTableCont");
+    });
 </script>

@@ -7,13 +7,13 @@ namespace ClothBazar.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class isFeaturedPropertyAdded : IMigrationMetadata
+    public sealed partial class intialize : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(isFeaturedPropertyAdded));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(intialize));
         
         string IMigrationMetadata.Id
         {
-            get { return "202105241957494_isFeaturedPropertyAdded"; }
+            get { return "202107011857531_intialize"; }
         }
         
         string IMigrationMetadata.Source

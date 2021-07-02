@@ -1,4 +1,4 @@
-﻿@model List<Product>
+﻿@model ClothBazar.Web.ViewModel.HomeViewModel
 @{
     ViewBag.Title = "ProductTable";
 }
@@ -7,16 +7,16 @@
 <div class="my-4">
     <form method="post">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-7">
                 <div class="form-group">
                     <input id="searchTxt" name="Search" class="form-control" />
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <div class="form-group">
                     <button type="button" id="searchBtn"> Search </button>
                     <button type="button" id="newBtn"> New </button>
-
+                    <button type="button" id="resetBtn"> Reset </button>
                 </div>
              </div>
         </div>
@@ -40,38 +40,87 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @if (Model.Products != null && Model.Products.Count > 0)
+            {
+                foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td> @item.Name </td>
+                        <td> @item.Price </td>
+                        <td>
+                            @if (item.Category != null)
+                            {
+                                <text> @item.Category.Name </text>
+                            }
+                            else
+                            {
+                                <text> --- </text>
+                            }
+
+                        </td>
+                        <td>
+                            <button type="button" class="editBtn" data-id="@item.ID">Edit</button>
+                            <button type="button" class="deleteBtn" data-id="@item.ID">Delete</button>
+                            <button type="button" class="btnAddToCart" data-id="@item.ID">Add To Cart</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td> @item.Name </td>
-                    <td> @item.Price </td>
-                    <td>
-                        @if (item.Category != null)
-                        {
-                            <text> @item.Category.Name </text>
-                        }
-                        else
-                        {
-                            <text> --- </text>
-                        }
-
-                    </td>
-                    <td>
-                        <button type="button" class="editBtn" data-id="@item.ID">Edit</button>
-                        <button type="button" class="deleteBtn" data-id="@item.ID">Delete</button>
-                        <button type="button" class="btnAddToCart" data-id="@item.ID">Add To Cart</button>
-                    </td>
+                    <td  colspan="4" class="text-center">No Products Found</td>
                 </tr>
             }
+
         </tbody>
     </table>
+    <div>
+        @if (Model.PageNo != 1) { 
+        <button class="btnPagination" data-PageNo="@(Model.PageNo-1)"> Previous </button>
+        }
+        <button class="btnPagination" data-PageNo="@(Model.PageNo+1)"> Next </button>
+    </div>
 
 </div>
 
 <div>
     <script>
+        $(".btnPagination").click(function () { // select element by id
+            
+            $.ajax({ // start ajax function
+                url: '/Product/ProductTable', // path for which action method wants to call
+                data: {
+                    pageNo: $(this).attr("data-PageNo") // put any data from current view
+                }
+            })
+                .done(function (response) { // if task is completed then this piece of code runs
+                    $("#tableCont").html(response);
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) { // if task is failed then this piece of code runs
+                    alert("Fail");
+                });
+        });
+
         $("#searchBtn").click(function () { // select element by id
             var searchVal = $("#searchTxt").val();
+
+            $.ajax({ // start ajax function
+                url: '/Product/ProductTable', // path for which action method wants to call
+                data: {
+                    search: searchVal  // put any data from current view
+                }
+            })
+                .done(function (response) { // if task is completed then this piece of code runs
+                    $("#tableCont").html(response);
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) { // if task is failed then this piece of code runs
+                    alert("Fail");
+                });
+        });
+
+        $("#resetBtn").click(function () { // select element by id
+            var searchVal = "";
 
             $.ajax({ // start ajax function
                 url: '/Product/ProductTable', // path for which action method wants to call
@@ -95,7 +144,7 @@
                 .done(function (response) {
                     console.log(response);
                     $("#actionCont").html(response);
-                    focusAction();
+                    focusAction("actionCont");
                 })
                 .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Fail");
@@ -103,7 +152,7 @@
         });
 
         $(".editBtn").click(function () {
-            //debugger;
+             //debugger;
             $.ajax({
                 url: '/Product/Edit',
                 data: {
@@ -112,7 +161,7 @@
             })
                 .done(function (response) {
                     $("#actionCont").html(response);
-                    focusAction();
+                    focusAction("actionCont");
                 })
                 .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Fail");
@@ -160,11 +209,6 @@
             alert("Product Added To Cart.");
 
         });
-        function focusAction() {
-            $("html, body").animate({
-                scrollTop: $("#actionCont").offset().top - 100
-            }, 1000);
-        }
 
     </script>
 </div>

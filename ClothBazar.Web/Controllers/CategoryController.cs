@@ -11,7 +11,9 @@ namespace ClothBazar.Web.Controllers
 {
     public class CategoryController : Controller // controller added for all categories
     {
-        CategoriesService categoriesService = new CategoriesService(); // obj for use all services
+        // CategoriesService categoriesService = new CategoriesService(); // obj for use all services // because use singleton thats why comment
+        
+        
         /// <summary>
         /// index created for showing all categories
         /// </summary>
@@ -22,13 +24,26 @@ namespace ClothBazar.Web.Controllers
             return View();
         }
 
-        public ActionResult CategoryTable()
+        public ActionResult CategoryTable(int? pageNo)
         {
-            var category = categoriesService.GetCategories();
-
-            //HomeViewModel homeViewModel = new HomeViewModel();
-            //homeViewModel.Categories = categoriesService.GetCategories();
-            return PartialView(category);
+            CategorySearchViewModel model = new CategorySearchViewModel();
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+            //int pageSize = 5;
+            
+            var totalRecords = CategoriesService.Instance.GetCategoriesCount();
+            model.Categories = CategoriesService.Instance.GetCategories(pageNo.Value);
+          
+            if (model.Categories != null)
+            {
+                model.Pager = new Pager(totalRecords, pageNo, 3);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+            
+            
+            return PartialView(model);
         }
 
         /// <summary>
@@ -49,7 +64,7 @@ namespace ClothBazar.Web.Controllers
         [HttpPost]
         public ActionResult Create(Category category) // save categories
         {
-            categoriesService.SaveCategory(category);
+            CategoriesService.Instance.SaveCategory(category);
             return RedirectToAction("CategoryTable");
         }
 
@@ -61,7 +76,7 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int ID) // edit new category 
         {
-            var category = categoriesService.GetCategoryById(ID);
+            var category = CategoriesService.Instance.GetCategoryById(ID);
             return PartialView(category);
         }
 
@@ -73,7 +88,7 @@ namespace ClothBazar.Web.Controllers
         [HttpPost]
         public ActionResult Edit(Category category) // edit category
         {
-            categoriesService.UpdateCategory(category);
+            CategoriesService.Instance.UpdateCategory(category);
             return RedirectToAction("CategoryTable");
         }
 
@@ -85,7 +100,7 @@ namespace ClothBazar.Web.Controllers
         [HttpPost]
         public ActionResult Delete(Category category) // edit category
         {
-            categoriesService.DeleteCategory(category.ID);
+            CategoriesService.Instance.DeleteCategory(category.ID);
             return RedirectToAction("CategoryTable");
         }
 

@@ -2,6 +2,7 @@
 using ClothBazar.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,15 +11,47 @@ namespace ClothBazar.Services
 {
     public class CategoriesService
     {
-        /// <summary>
-        /// get all categories from database 
-        /// </summary>
-        /// <returns> all list of categories </returns>
-        public List<Category> GetCategories() // get all category list
+
+        public static CategoriesService Instance
+        {
+            get // singleton method of using object of class
+            {
+                if (instance == null) instance = new CategoriesService();
+                return instance;
+            }
+        }
+        private static CategoriesService instance { get; set; } // singleton
+        public CategoriesService()
+        {
+
+        }
+
+        public int GetCategoriesCount() // get all category list
+        {
+            using (var context = new CBContext())
+            {
+                return context.Categories.Count();
+            }
+        }
+        public List<Category> GetAllCategories() // get all category list
         {
             using (var context = new CBContext())
             {
                 return context.Categories.ToList();
+
+            }
+        }
+
+        /// <summary>
+        /// get all categories from database 
+        /// </summary>
+        /// <returns> all list of categories </returns>
+        public List<Category> GetCategories(int PageNo) // get all category list
+        {
+            var pageSize = 3; //int.Parse(ConfigurationsService.Instance.GetConfigurationByKey("ListingPageSize").Value);
+            using (var context = new CBContext())
+            {
+                return context.Categories.OrderBy(p => p.ID).Skip((PageNo - 1) * pageSize).Take(pageSize).Include(x => x.Products).ToList();
             }
         }
 

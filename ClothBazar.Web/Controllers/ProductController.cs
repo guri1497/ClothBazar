@@ -11,8 +11,8 @@ namespace ClothBazar.Web.Controllers
 {
     public class ProductController : Controller // controller added for all products
     {
-        ProductsService productsService = new ProductsService();  // object for use services
-        CategoriesService categoriesService = new CategoriesService();
+        //ProductsService productsService = new ProductsService();  // object for use services
+        //CategoriesService categoriesService = new CategoriesService();
         
         /// <summary>
         /// showing all products
@@ -27,14 +27,34 @@ namespace ClothBazar.Web.Controllers
         /// getting all products 
         /// </summary>
         /// <returns> product view </returns>
-        public ActionResult ProductTable(string search) // this is main view of all product related operations
+        public ActionResult ProductTable(string search, int? pageNo) // this is main view of all product related operations
         {
-            var products = productsService.GetProducts(); //take all products
-            if(!string.IsNullOrEmpty(search)) // using for search functionality
+            HomeViewModel model = new HomeViewModel();
+            model.PageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+            // similar to above line
+            //if (pageNo.HasValue)
+            //{
+            //    if (pageNo.Value > 0)
+            //    {
+            //        model.PageNo = pageNo.Value;
+            //    }
+            //    else
+            //    {
+            //        model.PageNo = 1;
+            //    }
+            //}
+            //else
+            //{
+            //   model.PageNo = 1;
+            //}
+            model.Products = ProductsService.Instance.GetProducts(model.PageNo); //take all products
+
+     
+            if (!string.IsNullOrEmpty(search)) // using for search functionality
             {
-                products = products.Where(p => p.Name != null &&  p.Name.ToLower().Contains(search.ToLower())).ToList(); // filter data based on input
+                model.Products= model.Products.Where(p => p.Name != null &&  p.Name.ToLower().Contains(search.ToLower())).ToList(); // filter data based on input
             }
-            return PartialView(products);
+            return PartialView(model);
         }
 
         /// <summary>
@@ -44,7 +64,7 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Create() // create new category input field
         {
-            var categories = categoriesService.GetCategories();
+            var categories = CategoriesService.Instance.GetAllCategories();
             return PartialView(categories);
         }
 
@@ -62,8 +82,8 @@ namespace ClothBazar.Web.Controllers
             newProduct.Description = newCategoryViewModels.Description;
             newProduct.ImageURL = newCategoryViewModels.ImageURL;
             newProduct.CategoryID = newCategoryViewModels.CategoryID; // use this if dont want extra call to database see Product entity
-            newProduct.Category = categoriesService.GetCategoryById(newCategoryViewModels.CategoryID);
-            productsService.SaveProduct(newProduct);
+            newProduct.Category = CategoriesService.Instance.GetCategoryById(newCategoryViewModels.CategoryID);
+            ProductsService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
         }
 
@@ -75,9 +95,9 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int ID) // create new category input field
         {
-            //var model = new HomeViewModel();
-            var model = productsService.GetProductById(ID);
-            //model.Categories = categoriesService.GetCategories();
+            HomeViewModel model = new HomeViewModel();
+            model.Product = ProductsService.Instance.GetProductById(ID);
+            model.Categories = CategoriesService.Instance.GetAllCategories();
             return PartialView(model);
         }
 
@@ -89,7 +109,7 @@ namespace ClothBazar.Web.Controllers
         [HttpPost]
         public ActionResult Edit(Product product) // save categories
         {
-            productsService.UpdateProduct(product);
+            ProductsService.Instance.UpdateProduct(product);
             return RedirectToAction("ProductTable");
         }
 
@@ -101,7 +121,7 @@ namespace ClothBazar.Web.Controllers
         [HttpPost]
         public ActionResult Delete(int ID) // save categories
         {
-            productsService.DeleteProduct(ID);
+            ProductsService.Instance.DeleteProduct(ID);
             return RedirectToAction("ProductTable");
         }
     }

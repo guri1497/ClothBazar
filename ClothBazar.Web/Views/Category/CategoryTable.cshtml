@@ -1,4 +1,4 @@
-﻿@model List<Category>
+﻿@model ClothBazar.Web.ViewModel.CategorySearchViewModel
 @{
     ViewBag.Title = "CategoryTable";
 }
@@ -33,14 +33,14 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model != null && Model.Count > 0)
+            @if (Model.Categories != null && Model.Categories.Count > 0)
             {
-                foreach (var category in Model)
+                foreach (var category in Model.Categories)
                 {
                     <tr>
                         <td> @category.Name </td>
                         <td> @category.Description </td>
-                        <td> @*@category.Products.Count*@ </td>
+                        <td> @category.Products.Count </td>
                         <td>
                             <button type="button" class="editBtn" data-id="@category.ID">Edit</button>
                             <button type="button" class="deleteBtn" data-id="@category.ID">Delete</button>
@@ -54,11 +54,52 @@
             }
 
         </tbody>
+
     </table>
+    <div>
+        @if (Model.Pager != null)
+        {
+
+            if (Model.Pager.CurrentPage > 1)
+            {
+                <button class="btnPagination" data-PageNo="@(Model.Pager.CurrentPage - 1)"> Previous </button>
+                <button class="btnPagination" data-PageNo="1"> First </button>
+            }
+
+            for (var page = Model.Pager.StartPage; page <= Model.Pager.TotalPages; page++)
+            {
+                string activeClass = Model.Pager.CurrentPage == page ? "active bg-info" : string.Empty;
+                <button class="btnPagination @activeClass" data-PageNo="@page">@page</button>
+            }
+
+            if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <button class="btnPagination" data-PageNo="@Model.Pager.EndPage"> Last </button>
+                <button class="btnPagination" data-PageNo="@(Model.Pager.CurrentPage + 1)"> Next </button>
+            }
+        }
+    </div>
+
+
 
 </div>
 
 <script>
+    $(".btnPagination").click(function () { // select element by id
+
+        $.ajax({ // start ajax function
+            url: '/Category/CategoryTable', // path for which action method wants to call
+            data: {
+                pageNo: $(this).attr("data-PageNo") // put any data from current view
+            }
+        })
+            .done(function (response) { // if task is completed then this piece of code runs
+                $("#categoryTableCont").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) { // if task is failed then this piece of code runs
+                alert("Fail");
+            });
+    });
 
     $(".editBtn").click(function () {
         //debugger;
@@ -71,7 +112,7 @@
         })
             .done(function (response) {
                 $("#categoryActionCont").html(response);
-                focusAction();
+                focusAction("categoryActionCont");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Fail");
@@ -115,22 +156,18 @@
 
         $.ajax({
             type: 'GET',
-            url: "/Category/Create", 
+            url: "/Category/Create",
         })
             .done(function (response) {
                 console.log(response);
                 $("#categoryActionCont").html(response);
-                focusAction();
+                focusAction("categoryActionCont");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Fail");
             });
     });
 
-    function focusAction() {
-        $("html, body").animate({
-            scrollTop: $("#categoryActionCont").offset().top - 100
-        }, 1000);
-    }
+
 
 </script>
